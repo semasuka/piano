@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:audioplayers/audioplayers.dart';
+import 'package:audioplayers/audio_cache.dart';
 import 'package:flutter/widgets.dart';
 
 void main() {
@@ -7,171 +7,201 @@ void main() {
 }
 
 class Piano extends StatelessWidget {
+  BoxDecoration decoration() {
+    return BoxDecoration(
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.black,
+        ),
+      ),
+    );
+  }
+
+  FlatButton theButton(String note) {
+    return FlatButton(
+      splashColor: Colors.transparent,
+      color: Colors.white,
+      onPressed: () {
+        final player = AudioCache();
+        player.play('$note.mp3');
+      },
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.only(
+          topRight: Radius.circular(15.0),
+          bottomRight: Radius.circular(15.0),
+        ),
+      ),
+    );
+  }
+
+  Positioned blackSmallKeyTop(String note) {
+    return Positioned(
+      left: 10,
+      height: 80,
+      width: 250,
+      top: -40,
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        color: Colors.black,
+        onPressed: () {
+          final player = AudioCache();
+          player.play('$note.mp3');
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(10.0),
+            bottomRight: Radius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Positioned blackSmallKeyBottom(String note) {
+    return Positioned(
+      left: 10,
+      height: 80,
+      width: 250,
+      bottom: -40,
+      child: FlatButton(
+        splashColor: Colors.transparent,
+        color: Colors.black,
+        onPressed: () {
+          final player = AudioCache();
+          player.play('$note.mp3');
+        },
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+            topRight: Radius.circular(10.0),
+            bottomRight: Radius.circular(10.0),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        backgroundColor: Colors.grey,
+        // brown background color of the app
+        backgroundColor: Color.fromRGBO(101, 51, 8, 1),
         body: SafeArea(
-          child: Column(
-            children: <Widget>[
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 1.0),
-                  child: FractionallySizedBox(
-                    widthFactor: 0.95,
-                    child: FlatButton(
-                      splashColor: Colors.transparent,
-                      color: Colors.white,
-                      onPressed: () {
-                        print('key press');
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
+          child: Padding(
+            padding: const EdgeInsets.only(right: 12.0),
+            child: Column(
+              children: <Widget>[
+                Expanded(
+                  child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      fit: StackFit.expand,
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: Container(
+                            // back line that separate the keyboard
+                            decoration: decoration(),
+                            // E note key
+                            child: theButton('e'),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                        blackSmallKeyBottom('d#'),
+                      ]),
                 ),
-              ),
-              Stack(
-                children: <Widget>[
-                  Positioned(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      color: Colors.red,
-                    ),
-                  )
-                ],
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 1.0),
-                  child: FractionallySizedBox(
-                    widthFactor: 0.95,
-                    child: FlatButton(
-                      splashColor: Colors.transparent,
-                      color: Colors.white,
-                      onPressed: () {
-                        print('key press');
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
+                Expanded(
+                  child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      fit: StackFit.expand,
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: Container(
+                            decoration: decoration(),
+                            child: theButton('d'),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                        blackSmallKeyTop('d#'),
+                        blackSmallKeyBottom('c#'),
+                      ]),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 1.0),
-                  child: FractionallySizedBox(
-                    widthFactor: 0.95,
-                    child: FlatButton(
-                      color: Colors.white,
-                      splashColor: Colors.transparent,
-                      onPressed: () {
-                        print('key press');
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
+                Expanded(
+                  child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      fit: StackFit.expand,
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: Container(
+                            decoration: decoration(),
+                            child: theButton('c'),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                        blackSmallKeyTop('c#'),
+                      ]),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 1.0),
-                  child: FractionallySizedBox(
-                    widthFactor: 0.95,
-                    child: FlatButton(
-                      splashColor: Colors.transparent,
-                      color: Colors.white,
-                      onPressed: () {
-                        print('key press');
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
+                Expanded(
+                  child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      fit: StackFit.expand,
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: Container(
+                            decoration: decoration(),
+                            child: theButton('b'),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                        blackSmallKeyBottom('a#'),
+                      ]),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 1.0),
-                  child: FractionallySizedBox(
-                    widthFactor: 0.95,
-                    child: FlatButton(
-                      color: Colors.white,
-                      splashColor: Colors.transparent,
-                      onPressed: () {
-                        print('key press');
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
+                Expanded(
+                  child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      fit: StackFit.expand,
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: Container(
+                            decoration: decoration(),
+                            child: theButton('a'),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                        blackSmallKeyTop('a#'),
+                        blackSmallKeyBottom('g#'),
+                      ]),
                 ),
-              ),
-              Expanded(
-                child: Padding(
-                  padding: const EdgeInsets.only(bottom: 1.0),
-                  child: FractionallySizedBox(
-                    widthFactor: 0.95,
-                    child: FlatButton(
-                      color: Colors.white,
-                      splashColor: Colors.transparent,
-                      onPressed: () {
-                        print('key press');
-                      },
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.only(
-                          topRight: Radius.circular(10.0),
-                          bottomRight: Radius.circular(10.0),
+                Expanded(
+                  child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      fit: StackFit.expand,
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: Container(
+                            decoration: decoration(),
+                            child: theButton('g'),
+                          ),
                         ),
-                      ),
-                    ),
-                  ),
+                        blackSmallKeyTop('g#'),
+                        blackSmallKeyBottom('f#'),
+                      ]),
                 ),
-              ),
-              Expanded(
-                child: FractionallySizedBox(
-                  widthFactor: 0.95,
-                  child: FlatButton(
-                    color: Colors.white,
-                    splashColor: Colors.transparent,
-                    onPressed: () {
-                      print('key press');
-                    },
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.only(
-                        topRight: Radius.circular(10.0),
-                        bottomRight: Radius.circular(10.0),
-                      ),
-                    ),
-                  ),
+                Expanded(
+                  child: Stack(
+                      alignment: Alignment.bottomLeft,
+                      fit: StackFit.expand,
+                      children: [
+                        FractionallySizedBox(
+                          widthFactor: 0.95,
+                          child: theButton('f'),
+                        ),
+                        blackSmallKeyTop('f#'),
+                      ]),
                 ),
-              ),
-            ],
+              ],
+
+            ),
           ),
         ),
       ),
